@@ -1,7 +1,6 @@
 package com.mygdx.game.entities
 
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.MathUtils.random
 import com.mygdx.game.base.BaseActor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions

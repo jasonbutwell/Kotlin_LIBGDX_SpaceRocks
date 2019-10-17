@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 abstract class BaseScreen : Screen, InputProcessor {
 
     var mainStage: Stage = Stage()
-    private var uiStage: Stage = Stage()
+    var uiStage: Stage = Stage()
 
     init {
         initialize()
