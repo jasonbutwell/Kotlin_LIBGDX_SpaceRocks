@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.mygdx.game.ext.plusAssign
 
-open class BaseActor(x: Float, y : Float, stage: Stage) : Group() {
+open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
 
     private lateinit var animation: Animation<TextureRegion>
     private lateinit var boundaryPolygon: Polygon
@@ -310,7 +310,7 @@ open class BaseActor(x: Float, y : Float, stage: Stage) : Group() {
 
         lateinit var worldBounds: Rectangle
 
-        private fun getList(stage: Stage, className: String): Array<BaseActor> {
+        fun getList(stage: Stage, className: String): Array<BaseActor> {
 
             val subPackage = ".base"
             val packageName = "entities"
