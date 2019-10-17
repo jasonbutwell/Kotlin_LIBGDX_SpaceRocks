@@ -1,5 +1,6 @@
 package com.mygdx.game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.mygdx.game.base.BaseActor
 
@@ -8,6 +9,7 @@ import com.mygdx.game.entities.Explosion
 import com.mygdx.game.entities.Rock
 import com.mygdx.game.entities.Spaceship
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.mygdx.game.config.Settings
 
 class LevelScreen : BaseScreen() {
 
@@ -19,10 +21,13 @@ class LevelScreen : BaseScreen() {
         val space = BaseActor(0f, 0f, mainStage)
 
         space.loadTexture("space.png")
-        space.setSize(800f, 600f)
+        space.setSize(Settings.screenWidth.toFloat(),Settings.screenHeight.toFloat())
         BaseActor.setWorldBounds(space)
 
-        spaceship = Spaceship(400f, 300f, mainStage)
+        val xPos = Settings.screenWidth/2.toFloat()
+        val yPos = Settings.screenHeight/2.toFloat()
+
+        spaceship = Spaceship(xPos,yPos, mainStage)
 
         Rock(600F,500F,mainStage)
         Rock(600F,300F,mainStage)
@@ -49,10 +54,10 @@ class LevelScreen : BaseScreen() {
             for (rock in BaseActor.getList(mainStage, "Rock")) {
                 if (rock.overlaps((spaceship)))
                     if (spaceship.shieldPower <= 0) {
-                        var boomStarship = Explosion(0F, 0F, mainStage)
+                        val boomStarship = Explosion(0F, 0F, mainStage)
                         boomStarship.centerAtActor(spaceship)
 
-                        var boomRock = Explosion(0F, 0F, mainStage)
+                        val boomRock = Explosion(0F, 0F, mainStage)
                         boomRock.centerAtActor(rock)
 
                         spaceship.remove()
@@ -88,7 +93,9 @@ class LevelScreen : BaseScreen() {
         val messageWin = BaseActor(0f, 0f, uiStage)
         with(messageWin) {
             loadTexture("message-win.png")
-            centerAtPosition(400f, 300f)
+            val x = Settings.screenWidth / 2
+            val y = Settings.screenHeight / 2
+            centerAtPosition(x.toFloat(), y.toFloat())
             setOpacity(0f)
             addAction(Actions.fadeIn(1f))
             addAction(Actions.after(Actions.delay(3f)))
@@ -102,7 +109,9 @@ class LevelScreen : BaseScreen() {
         val messageLose = BaseActor(0f, 0f, uiStage)
         with (messageLose) {
             loadTexture("message-lose.png")
-            centerAtPosition(400f, 300f)
+            val x = Settings.screenWidth / 2
+            val y = Settings.screenHeight / 2
+            centerAtPosition(x.toFloat(), y.toFloat())
             setOpacity(0f)
             addAction(Actions.fadeIn(1f))
             addAction(Actions.after(Actions.delay(3f)))

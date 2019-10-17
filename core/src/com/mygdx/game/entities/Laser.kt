@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.mygdx.game.base.BaseActor
 
 class Laser(x: Float, y: Float, s: Stage) : BaseActor(x, y, s)  {
+
     init {
         loadTexture("laser.png")
         addAction(Actions.delay(1f))

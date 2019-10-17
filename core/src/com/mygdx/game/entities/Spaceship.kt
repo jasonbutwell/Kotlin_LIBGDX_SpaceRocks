@@ -15,12 +15,14 @@ class Spaceship(x: Float, y: Float, stage: Stage) : BaseActor(x, y, stage) {
     private var shield: Shield
     var shieldPower: Int = 0
 
+    private val maxLasers = 3
+
     init {
         loadTexture("spaceship.png")
         setBoundaryPolygon(8)
 
-        acceleration = 200F
-        maxSpeed = 150F
+        acceleration = 300F
+        maxSpeed = 250F
         deceleration = 10F
 
         thrusters = Thrusters(0F, 0F, stage)
@@ -51,10 +53,12 @@ class Spaceship(x: Float, y: Float, stage: Stage) : BaseActor(x, y, stage) {
         if (stage == null)
             return
 
-        val laser = Laser(0F,0F,stage)
-        laser.centerAtActor(this)
-        laser.rotation = rotation
-        laser.setMotionAngle(rotation)
+        if ( getList(stage,"Laser").count() < maxLasers ) {
+            val laser = Laser(0F, 0F, stage)
+            laser.centerAtActor(this)
+            laser.rotation = rotation
+            laser.setMotionAngle(rotation)
+        }
     }
 
     override fun act(dt: Float) {
