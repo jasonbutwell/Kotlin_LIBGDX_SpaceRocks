@@ -37,6 +37,21 @@ open class BaseActor(x: Float, y : Float, stage: Stage) : Group() {
         stage += this
     }
 
+    fun wrapAroundWorld() {
+
+        if (x + width < 0)
+            x = worldBounds.width   // Object goes outside left side
+
+        if( x > worldBounds.width)  // Object goes outside right side
+            x = -width
+
+        if (y + height < 0)
+            y = worldBounds.height  // Object goes below bottom
+
+        if (y > worldBounds.height) // Object goes above top
+            y = -height
+    }
+
     fun boundToWorld() {
 
         // check left edge
@@ -56,8 +71,8 @@ open class BaseActor(x: Float, y : Float, stage: Stage) : Group() {
         setPosition(x - width / 2, y - height / 2)
     }
 
-    fun centerAtActor(other: BaseActor) {
-        centerAtPosition(other.x + other.width / 2, other.y + other.height / 2)
+    fun centerAtActor(other: BaseActor, offsetX : Float = 0F, offsetY : Float = 0F ) {
+        centerAtPosition(other.x + (other.width+offsetX) / 2,(other.y+offsetY) + other.height / 2)
     }
 
     fun setOpacity(opacity: Float) {
@@ -137,14 +152,14 @@ open class BaseActor(x: Float, y : Float, stage: Stage) : Group() {
         velocityVec.setAngle(angle)
     }
 
-    private fun setSpeed(speed: Float) {
+    fun setSpeed(speed: Float) {
         if (velocityVec.len() == 0f)
             velocityVec.set(speed, 0f)
         else
             velocityVec.setLength(speed)
     }
 
-    private fun getSpeed() = velocityVec.len()
+    fun getSpeed() = velocityVec.len()
     fun getMotionAngle() = velocityVec.angle()
     fun isMoving() = getSpeed() > 0
 

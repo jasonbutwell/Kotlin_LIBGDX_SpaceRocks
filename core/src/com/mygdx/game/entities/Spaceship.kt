@@ -47,6 +47,16 @@ class Spaceship(x: Float, y: Float, stage: Stage) : BaseActor(x, y, stage) {
         warp2.centerAtActor(this)
     }
 
+    fun shoot() {
+        if (stage == null)
+            return
+
+        val laser = Laser(0F,0F,stage)
+        laser.centerAtActor(this)
+        laser.rotation = rotation
+        laser.setMotionAngle(rotation)
+    }
+
     override fun act(dt: Float) {
 
         super.act(dt)
@@ -55,7 +65,7 @@ class Spaceship(x: Float, y: Float, stage: Stage) : BaseActor(x, y, stage) {
 
         shield.setOpacity(shieldPower / 100f);
         if (shieldPower <= 0)
-            shield.setVisible(false);
+            shield.isVisible = false;
 
         applyPhysics(dt)    // Apply the velocity
         wrapAroundWorld()   // Stop ship going outside of world
@@ -75,20 +85,5 @@ class Spaceship(x: Float, y: Float, stage: Stage) : BaseActor(x, y, stage) {
         }
         else
             thrusters.addAction(Actions.fadeOut(.5f))
-    }
-
-    private fun wrapAroundWorld() {
-
-        if (x + width < 0)
-            x = worldBounds.width   // Object goes outside left side
-
-        if( x > worldBounds.width)  // Object goes outside right side
-            x = -width
-
-        if (y + height < 0)
-            y = worldBounds.height  // Object goes below bottom
-
-        if (y > worldBounds.height) // Object goes above top
-            y = -height
     }
 }
