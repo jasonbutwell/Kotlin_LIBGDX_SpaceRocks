@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Group
 import com.mygdx.game.ext.plusAssign
 
-open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
+open class BaseActor(x: Float, y: Float, stage: Stage, scale : Float = 1f) : Group() {
 
     private lateinit var animation: Animation<TextureRegion>
     private lateinit var boundaryPolygon: Polygon
@@ -33,8 +33,11 @@ open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
     var deceleration = 0f
 
     init {
+        setScale(scale)
         setPosition(x, y)
         stage += this
+
+        //setDebug(true)
     }
 
     fun wrapAroundWorld() {
@@ -71,8 +74,8 @@ open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
         setPosition(x - width / 2, y - height / 2)
     }
 
-    fun centerAtActor(other: BaseActor, offsetX : Float = 0F, offsetY : Float = 0F ) {
-        centerAtPosition(other.x + (other.width+offsetX) / 2,(other.y+offsetY) + other.height / 2)
+    fun centerAtActor(other: BaseActor) {
+        centerAtPosition(other.x + other.width / 2,other.y + other.height / 2)
     }
 
     fun setOpacity(opacity: Float) {
@@ -98,9 +101,8 @@ open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
             return null
 
         val mtv = MinimumTranslationVector()
-        val polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv)
 
-        if (!polygonOverlap)
+        if (!Intersector.overlapConvexPolygons(poly1, poly2, mtv))
             return null
 
         moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth)
@@ -270,9 +272,11 @@ open class BaseActor(x: Float, y: Float, stage: Stage) : Group() {
         animationPaused = pauseState
     }
 
-    override fun drawDebug(shapes: ShapeRenderer?) {
+    override fun drawDebug(shapes: ShapeRenderer) {
         super.drawDebug(shapes)
-//      shapes?.polygon(boundaryPolygon.vertices)
+
+        shapes.setColor(Color.RED)
+        shapes.polygon(boundaryPolygon.transformedVertices)
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {

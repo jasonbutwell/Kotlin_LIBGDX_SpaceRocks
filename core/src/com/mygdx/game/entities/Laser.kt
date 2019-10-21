@@ -8,6 +8,7 @@ class Laser(x: Float, y: Float, s: Stage) : BaseActor(x, y, s)  {
 
     init {
         loadTexture("laser.png")
+
         addAction(Actions.delay(1f))
         addAction(Actions.after(Actions.fadeOut(0.5f)))
         addAction(Actions.after(Actions.removeActor()))
@@ -19,6 +20,7 @@ class Laser(x: Float, y: Float, s: Stage) : BaseActor(x, y, s)  {
 
     override fun act(dt: Float ) {
         super.act(dt)
+
         applyPhysics(dt)
         wrapAroundWorld()
     }

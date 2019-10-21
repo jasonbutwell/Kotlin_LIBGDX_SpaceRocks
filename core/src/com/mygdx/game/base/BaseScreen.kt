@@ -65,9 +65,11 @@ abstract class BaseScreen : Screen, InputProcessor {
         // Add Input processor to uiStage and mainStage
 
         val im : InputMultiplexer = Gdx.input.inputProcessor as InputMultiplexer
-        im.addProcessor(this)
-        im.addProcessor(uiStage)
-        im.addProcessor(mainStage)
+        with (im) {
+            addProcessor(this@BaseScreen)
+            addProcessor(uiStage)
+            addProcessor(mainStage)
+        }
     }
 
     override fun hide() {
@@ -75,8 +77,10 @@ abstract class BaseScreen : Screen, InputProcessor {
         // Remove Input processor from uiStage and mainStage
 
         val im : InputMultiplexer = Gdx.input.inputProcessor as InputMultiplexer
-        im.removeProcessor(this)
-        im.removeProcessor(uiStage)
-        im.removeProcessor(mainStage)
+        with (im) {
+            removeProcessor(this@BaseScreen)
+            removeProcessor(uiStage)
+            removeProcessor(mainStage)
+        }
     }
 }
